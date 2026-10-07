@@ -1,0 +1,143 @@
+/* ============================================================
+ * Fonts
+ * ============================================================ */
+
+@import "@fontsource/lora/400.css";
+@import "@fontsource/lora/500.css";
+@import "@fontsource/lora/600.css";
+
+@import "@fontsource/source-sans-3/400.css";
+@import "@fontsource/source-sans-3/500.css";
+@import "@fontsource/source-sans-3/600.css";
+@import "@fontsource/source-sans-3/700.css";
+
+@import "tailwindcss";
+
+/* ============================================================
+ * Design tokens
+ * ============================================================ */
+
+@theme {
+    /* Brand */
+    --color-brand-primary: #12496d;
+    --color-brand-primary-dark: #0d3854;
+    --color-brand-primary-light: #edf5fc;
+
+    --color-brand-accent: #c58b3a;
+    --color-brand-accent-light: #e0b76a;
+
+    /* UI */
+    --color-text: #263746;
+    --color-text-muted: #64748b;
+    --color-border: #e2e8f0;
+    --color-surface: #f8fafc;
+
+    /* Typography */
+    --font-serif: "Lora", serif;
+    --font-sans: "Source Sans 3", sans-serif;
+
+    /* Layout */
+    --container-site: 80rem;
+}
+
+/* ============================================================
+ * Base
+ * ============================================================ */
+
+@layer base {
+    html {
+        @apply scroll-smooth;
+    }
+
+    body {
+        @apply font-sans text-text antialiased;
+    }
+
+    a {
+        @apply transition-colors;
+    }
+}
+
+/* ============================================================
+ * Components
+ * ============================================================ */
+
+@layer components {
+    .container-site {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    }
+
+    .heading-section {
+        @apply font-serif text-3xl font-semibold leading-tight text-brand-primary
+            sm:text-4xl;
+    }
+
+    .button-primary {
+        @apply inline-flex items-center justify-center
+            rounded-md px-5 py-2.5
+            font-sans text-sm font-semibold
+            bg-brand-primary text-white
+            transition-colors
+            hover:bg-brand-primary-dark
+            focus:outline-none focus:ring-2
+            focus:ring-brand-accent/50;
+    }
+
+    .button-secondary {
+        @apply inline-flex items-center justify-center
+            rounded-md px-5 py-2.5
+            font-sans text-sm font-semibold
+            border border-brand-primary
+            text-brand-primary
+            transition-colors
+            hover:bg-brand-primary-light
+            focus:outline-none focus:ring-2
+            focus:ring-brand-accent/50;
+    }
+
+    /* Markdown page content (rendered by PageLayout.astro).
+     * Page bodies start at `##`: the layout renders the `h1`. */
+    .md-content {
+        @apply font-sans text-base leading-relaxed text-text;
+
+        h2 {
+            @apply mt-10 mb-4 font-serif text-2xl font-semibold
+                leading-snug text-brand-primary;
+        }
+
+        h3 {
+            @apply mt-8 mb-3 font-serif text-xl font-semibold
+                leading-snug text-brand-primary;
+        }
+
+        p {
+            @apply mb-4;
+        }
+
+        a {
+            @apply text-brand-primary underline
+                underline-offset-4 hover:text-brand-accent;
+        }
+
+        ul {
+            @apply mb-4 list-disc space-y-2 pl-6;
+        }
+
+        ol {
+            @apply mb-4 list-decimal space-y-2 pl-6;
+        }
+
+        blockquote {
+            @apply mb-4 border-l-4 border-brand-primary
+                pl-4 italic text-text-muted;
+        }
+
+        hr {
+            @apply my-8 border-border;
+        }
+
+        strong {
+            @apply font-semibold text-text;
+        }
+    }
+}

@@ -1,0 +1,91 @@
+---
+import DesktopNavigation from "./DesktopNavigation.astro";
+import MobileNavigation from "./MobileNavigation.astro";
+---
+
+<header class="border-b border-border bg-white">
+  <div class="container-site flex min-h-24 items-center">
+    <!-- Mobile menu button -->
+    <button
+      id="mobile-menu-button"
+      type="button"
+      class="mr-3 flex h-11 w-11 shrink-0 items-center justify-center
+             rounded-full text-brand-primary
+             transition-colors
+             hover:bg-brand-primary-light hover:text-brand-accent
+             focus:outline-none focus:ring-2 focus:ring-brand-accent/50
+             lg:hidden"
+      aria-label="Ouvrir le menu"
+      aria-controls="mobile-navigation"
+      aria-expanded="false"
+    >
+      <svg
+        class="h-6 w-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+    </button>
+
+    <!-- Logo and site identity -->
+    <a
+      href="/"
+      class="flex min-w-0 flex-1 items-center gap-3"
+      aria-label="Cours Sainte-Thérèse — Accueil"
+    >
+      <img
+        src="/images/logo-256.png"
+        alt=""
+        width="256"
+        height="256"
+        class="w-auto h-[4.5rem]"
+      />
+
+      <div>
+        <span
+          class="block font-serif text-2xl font-semibold leading-tight
+                 break-words text-brand-primary lg:text-3xl"
+        >
+          Cours Sainte-Thérèse
+        </span>
+
+        <span
+          class="mt-0.5 block font-sans text-[0.65rem] font-semibold
+                 uppercase tracking-[0.18em] text-text-muted"
+        >
+          Établissement scolaire privé
+        </span>
+      </div>
+    </a>
+
+    <!-- Desktop navigation -->
+    <div class="ml-auto">
+      <DesktopNavigation />
+    </div>
+  </div>
+
+  <MobileNavigation />
+</header>
+
+<script>
+  const button = document.querySelector("#mobile-menu-button");
+  const navigation = document.querySelector("#mobile-navigation");
+
+  button?.addEventListener("click", () => {
+    if (!navigation) return;
+
+    const isOpen = navigation.classList.toggle("hidden") === false;
+
+    navigation.setAttribute("aria-hidden", String(!isOpen));
+
+    button.setAttribute("aria-expanded", String(isOpen));
+    button.setAttribute(
+      "aria-label",
+      isOpen ? "Fermer le menu" : "Ouvrir le menu",
+    );
+  });
+</script>

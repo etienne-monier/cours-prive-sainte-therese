@@ -1,0 +1,33 @@
+---
+import Layout from "./Layout.astro";
+
+interface MarkdownFrontmatter {
+  title: string;
+  description?: string;
+}
+
+interface Props {
+  frontmatter: MarkdownFrontmatter;
+}
+
+const { frontmatter } = Astro.props;
+const { title, description } = frontmatter;
+---
+
+<Layout title={title} description={description}>
+  <div class="container-site py-10 sm:py-14">
+    <header class="max-w-3xl">
+      <h1 class="heading-section">{title}</h1>
+
+      {
+        description && (
+          <p class="mt-4 font-sans text-lg text-text-muted">{description}</p>
+        )
+      }
+    </header>
+
+    <div class="md-content mt-8 max-w-3xl">
+      <slot />
+    </div>
+  </div>
+</Layout>

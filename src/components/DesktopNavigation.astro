@@ -1,0 +1,113 @@
+---
+import { navigation } from "../config/navigation";
+
+const currentPath = Astro.url.pathname;
+
+const isActive = (href: string) => {
+  if (href === "/") {
+    return currentPath === "/";
+  }
+
+  return currentPath === href || currentPath.startsWith(`${href}/`);
+};
+---
+
+<nav class="hidden lg:block" aria-label="Navigation principale">
+  <ul class="flex items-center gap-1">
+    {
+      navigation.map((item) => {
+        const active = isActive(item.href);
+
+        return (
+          <li class="group relative">
+            <a
+              href={item.href}
+              class:list={[
+                "relative flex items-center gap-1 px-3 py-8",
+                "font-sans text-base font-semibold tracking-wide",
+                "transition-colors",
+                active
+                  ? "text-brand-accent"
+                  : "text-brand-primary hover:text-brand-accent",
+              ]}
+              aria-current={active ? "page" : undefined}
+            >
+              {item.label}
+
+              {item.children && (
+                <svg
+                  class="h-4 w-4 transition-transform group-hover:rotate-180"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10
+                       11.168l3.71-3.938a.75.75 0 111.08
+                       1.04l-4.25 4.51a.75.75 0 01-1.08 0l-4.25-4.51
+                       a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              )}
+
+              <!-- Active / hover indicator -->
+              <span
+                class:list={[
+                  "absolute inset-x-3 bottom-5 h-0.5 origin-center",
+                  "bg-brand-accent transition-transform duration-200",
+                  active
+                    ? "scale-x-100"
+                    : "scale-x-0 group-hover:scale-x-100",
+                ]}
+                aria-hidden="true"
+              />
+            </a>
+
+            {item.children && (
+              <ul
+                class="invisible absolute left-0 top-full z-20 min-w-64
+                       translate-y-2 rounded-lg border border-border
+                       bg-white py-2 opacity-0 shadow-lg
+                       transition-all duration-150
+                       group-hover:visible group-hover:translate-y-0
+                       group-hover:opacity-100
+                       group-focus-within:visible
+                       group-focus-within:translate-y-0
+                       group-focus-within:opacity-100"
+              >
+                {
+                  item.children.map((child) => {
+                    const childActive = isActive(child.href);
+
+                    return (
+                      <li>
+                        <a
+                          href={child.href}
+                          class:list={[
+                            "block px-5 py-2.5",
+                            "font-sans text-sm font-medium",
+                            "transition-colors",
+                            childActive
+                              ? "bg-brand-primary-light text-brand-primary"
+                              : "text-text hover:bg-brand-primary-light hover:text-brand-primary",
+                          ]}
+                          aria-current={
+                            childActive ? "page" : undefined
+                          }
+                        >
+                          {child.label}
+                        </a>
+                      </li>
+                    );
+                  })
+                }
+              </ul>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>
