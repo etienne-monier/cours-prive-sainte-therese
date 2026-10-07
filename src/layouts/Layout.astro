@@ -1,17 +1,44 @@
 ---
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import { absoluteUrl } from "../utils/url";
 import "../styles/global.css";
 
 interface Props {
   title: string;
   description?: string;
+  /** Schémas JSON-LD supplémentaires à ajouter dans le `<head>`. */
+  jsonLd?: Record<string, unknown>[];
 }
 
 const {
   title,
   description = "Cours Privé Sainte-Thérèse",
+  jsonLd = [],
 } = Astro.props;
+
+const site = Astro.site;
+const canonical = site
+  ? absoluteUrl(Astro.url.pathname, site)
+  : Astro.url.href;
+const ogImage = site ? absoluteUrl("/images/og-card.png", site) : "";
+const logo = site ? absoluteUrl("/images/logo-256.png", site) : "";
+const fullTitle = `${title} | Cours Privé Sainte-Thérèse`;
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: "Cours Privé Sainte-Thérèse",
+  alternateName: "Cours Sainte-Thérèse",
+  url: site?.href ?? "",
+  logo,
+  email: "contact@coursprivesaintetherese.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Saverdun",
+    addressCountry: "FR",
+  },
+};
 ---
 
 <!doctype html>
@@ -20,8 +47,39 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
 
-    <title>{title} | Cours Privé Sainte-Thérèse</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#12496d" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cours Privé Sainte-Thérèse" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cours Privé Sainte-Thérèse" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {
+      [organizationSchema, ...jsonLd].map((schema) => (
+        <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+      ))
+    }
   </head>
 
   <body class="min-h-screen bg-white text-slate-800">

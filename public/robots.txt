@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://etienne-monier.github.io/cours-prive-sainte-therese/sitemap-index.xml

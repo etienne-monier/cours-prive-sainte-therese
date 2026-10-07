@@ -1,5 +1,7 @@
 ---
 import Layout from "./Layout.astro";
+import { navigation } from "../config/navigation";
+import { absoluteUrl } from "../utils/url";
 
 interface MarkdownFrontmatter {
   title: string;
@@ -12,9 +14,46 @@ interface Props {
 
 const { frontmatter } = Astro.props;
 const { title, description } = frontmatter;
+
+// Libellé d'une page issu de la navigation (sinon undefined).
+function labelFor(path: string): string | undefined {
+  for (const item of navigation) {
+    if (item.href === path) return item.label;
+    const child = item.children?.find((entry) => entry.href === path);
+    if (child) return child.label;
+  }
+  return undefined;
+}
+
+// Fil d'Ariane dérivé du chemin de la page, en cohérence avec le h1 visible
+// (dernier niveau = titre de la page, niveaux parents = libellés du menu).
+const segments = Astro.url.pathname.split("/").filter(Boolean);
+const crumbs: { name: string; path: string }[] = [
+  { name: "Accueil", path: "/" },
+];
+let currentPath = "/";
+for (const [index, segment] of segments.entries()) {
+  currentPath += `${segment}/`;
+  const isLeaf = index === segments.length - 1;
+  const name = isLeaf
+    ? title
+    : (labelFor(currentPath) ?? segment.replaceAll("-", " "));
+  crumbs.push({ name, path: currentPath });
+}
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: crumbs.map((crumb, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: crumb.name,
+    item: Astro.site ? absoluteUrl(crumb.path, Astro.site) : crumb.path,
+  })),
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} jsonLd={[breadcrumbSchema]}>
   <div class="container-site py-10 sm:py-14">
     <header class="max-w-3xl">
       <h1 class="heading-section">{title}</h1>
