@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { withBase } from "../utils/url";
 ---
 
 <Layout
@@ -20,6 +21,6 @@ import Layout from "../layouts/Layout.astro";
       La page que vous cherchez n'existe pas ou a été déplacée.
     </p>
 
-    <a href="/" class="button-primary mt-8">Retour à l'accueil</a>
+    <a href={withBase("/")} class="button-primary mt-8">Retour à l'accueil</a>
   </div>
 </Layout>

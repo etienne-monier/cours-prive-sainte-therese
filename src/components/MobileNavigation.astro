@@ -1,5 +1,6 @@
 ---
 import { navigation } from "../config/navigation";
+import { withBase } from "../utils/url";
 ---
 
 <div
@@ -109,7 +110,7 @@ import { navigation } from "../config/navigation";
                       item.children.map((child) => (
                         <li>
                           <a
-                            href={child.href}
+                            href={withBase(child.href)}
                             class="block rounded-md px-3 py-2.5
                                    font-sans text-sm font-medium
                                    text-text-muted transition-colors
@@ -125,7 +126,7 @@ import { navigation } from "../config/navigation";
                 </details>
               ) : (
                 <a
-                  href={item.href}
+                  href={withBase(item.href)}
                   class="block rounded-md px-3 py-3
                          font-sans text-base font-semibold
                          tracking-wide text-brand-primary

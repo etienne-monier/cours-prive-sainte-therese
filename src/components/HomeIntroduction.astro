@@ -1,3 +1,7 @@
+---
+import { withBase } from "../utils/url";
+---
+
 <section class="bg-white">
   <div
     class="container-site grid gap-10 py-16 sm:py-20
@@ -40,7 +44,7 @@
       </div>
 
       <a
-        href="/lecole/"
+        href={withBase("/lecole/")}
         class="mt-8 inline-flex items-center gap-2
                font-sans text-sm font-semibold text-brand-primary
                transition-colors hover:text-brand-accent"

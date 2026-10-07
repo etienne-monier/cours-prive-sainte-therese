@@ -1,3 +1,7 @@
+---
+import { withBase } from "../utils/url";
+---
+
 <section class="bg-brand-primary-light">
   <div
     class="container-site grid min-h-[28rem] items-center gap-12
@@ -29,12 +33,12 @@
       </p>
 
       <div class="mt-8 flex flex-wrap items-center gap-4">
-        <a href="/lecole/" class="button-primary">
+        <a href={withBase("/lecole/")} class="button-primary">
           Découvrir l'école
         </a>
 
         <a
-          href="/contact/"
+          href={withBase("/contact/")}
           class="font-sans text-sm font-semibold text-brand-primary
                  transition-colors hover:text-brand-accent"
         >
@@ -50,7 +54,7 @@
                ring-1 ring-brand-primary/10"
       >
         <img
-          src="/images/ecole.webp"
+          src={withBase("/images/ecole.webp")}
           alt="Le Cours Sainte-Thérèse"
           width="953"
           height="713"

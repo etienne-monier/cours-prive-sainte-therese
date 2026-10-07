@@ -1,7 +1,7 @@
 ---
 import Layout from "./Layout.astro";
 import { navigation } from "../config/navigation";
-import { absoluteUrl } from "../utils/url";
+import { absoluteUrl, stripBase } from "../utils/url";
 
 interface MarkdownFrontmatter {
   title: string;
@@ -27,7 +27,7 @@ function labelFor(path: string): string | undefined {
 
 // Fil d'Ariane dérivé du chemin de la page, en cohérence avec le h1 visible
 // (dernier niveau = titre de la page, niveaux parents = libellés du menu).
-const segments = Astro.url.pathname.split("/").filter(Boolean);
+const segments = stripBase(Astro.url.pathname).split("/").filter(Boolean);
 const crumbs: { name: string; path: string }[] = [
   { name: "Accueil", path: "/" },
 ];

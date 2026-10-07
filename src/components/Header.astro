@@ -1,6 +1,7 @@
 ---
 import DesktopNavigation from "./DesktopNavigation.astro";
 import MobileNavigation from "./MobileNavigation.astro";
+import { withBase } from "../utils/url";
 ---
 
 <header class="border-b border-border bg-white">
@@ -33,12 +34,12 @@ import MobileNavigation from "./MobileNavigation.astro";
 
     <!-- Logo and site identity -->
     <a
-      href="/"
+      href={withBase("/")}
       class="flex min-w-0 flex-1 items-center gap-3"
       aria-label="Cours Sainte-Thérèse — Accueil"
     >
       <img
-        src="/images/logo-256.png"
+        src={withBase("/images/logo-256.png")}
         alt=""
         width="256"
         height="256"

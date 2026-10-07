@@ -1,3 +1,7 @@
+---
+import { withBase } from "../utils/url";
+---
+
 <footer class="border-t border-border bg-white">
   <!-- Main footer -->
   <div class="container-site py-10 sm:py-12">
@@ -58,7 +62,7 @@
         >
           <li>
             <a
-              href="/mentions-legales/"
+              href={withBase("/mentions-legales/")}
               class="transition-colors hover:text-brand-accent"
             >
               Mentions légales
@@ -67,7 +71,7 @@
 
           <li>
             <a
-              href="/confidentialite/"
+              href={withBase("/confidentialite/")}
               class="transition-colors hover:text-brand-accent"
             >
               Confidentialité
@@ -76,7 +80,7 @@
 
           <li>
             <a
-              href="/plan-du-site/"
+              href={withBase("/plan-du-site/")}
               class="transition-colors hover:text-brand-accent"
             >
               Plan du site

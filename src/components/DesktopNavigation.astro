@@ -1,7 +1,8 @@
 ---
 import { navigation } from "../config/navigation";
+import { stripBase, withBase } from "../utils/url";
 
-const currentPath = Astro.url.pathname;
+const currentPath = stripBase(Astro.url.pathname);
 
 const isActive = (href: string) => {
   if (href === "/") {
@@ -21,7 +22,7 @@ const isActive = (href: string) => {
         return (
           <li class="group relative">
             <a
-              href={item.href}
+              href={withBase(item.href)}
               class:list={[
                 "relative flex items-center gap-1 px-3 py-8",
                 "font-sans text-base font-semibold tracking-wide",
@@ -84,7 +85,7 @@ const isActive = (href: string) => {
                     return (
                       <li>
                         <a
-                          href={child.href}
+                          href={withBase(child.href)}
                           class:list={[
                             "block px-5 py-2.5",
                             "font-sans text-sm font-medium",
